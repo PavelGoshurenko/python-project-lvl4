@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import django_heroku
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG', False))
 
 ALLOWED_HOSTS = []
 
@@ -131,3 +131,6 @@ ROLLBAR = {
 }
 """ import rollbar
 rollbar.init(**ROLLBAR) """
+# Configure Django App for Heroku.
+
+django_heroku.settings(locals())
