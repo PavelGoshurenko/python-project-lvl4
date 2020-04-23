@@ -1,0 +1,12 @@
+dist/
+.vscode
+.coverage
+coverage.xml
+.venv/
+*.pyc
+*.egg-info
+__pycache__
+task_manager/.env
+
+
+
