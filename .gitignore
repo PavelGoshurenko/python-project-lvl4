@@ -7,7 +7,7 @@ coverage.xml
 *.egg-info
 __pycache__
 task_manager/.env
-/.env
+.env
 
 
 

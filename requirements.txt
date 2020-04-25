@@ -7,3 +7,4 @@ python-dotenv==0.13.0
 rollbar==0.15.0
 sqlparse==0.3.1
 whitenoise==5.0.1
+django-bootstrap4==1.1.1
