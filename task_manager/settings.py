@@ -62,7 +62,7 @@ ROOT_URLCONF = 'task_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,11 +134,8 @@ ROLLBAR = {
 }
 """ import rollbar
 rollbar.init(**ROLLBAR) """
+LOGIN_REDIRECT_URL = '/'
 # Configure Django App for Heroku.
 
 django_heroku.settings(locals())
 
-# Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)

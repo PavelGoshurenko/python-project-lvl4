@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -15,9 +16,16 @@ class Task(models.Model):
         ('5', 'status 5'),
     ]
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         """
         String for representing the Model object.
         """
         return self.name
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular task instance.
+        """
+        return reverse('task_update', args=[str(self.id)])

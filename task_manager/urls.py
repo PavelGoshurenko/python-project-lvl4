@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from task_manager import views
 from django.views.generic import RedirectView
+from django.conf.urls import url
 
 urlpatterns = [
     #path('', views.index),
     path('', RedirectView.as_view(url='/tasks/', permanent=True)),
     path('tasks/', include('tasks.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    url(r'^register/$', views.RegisterFormView.as_view(), name='register'),
 ]
