@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+    <form action="" method="post" class="form">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      Add Status
+    </button>
+  {% endbuttons %}
+</form>
+
+
+
+    <h3 class="cover-heading">Task statuses:</h3>
+    {% if task_statuses %}
+    {% for task_status in task_statuses %}
+    <div class="card text-white bg-secondary mb-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6"><div class="text-left"><a href="{% url 'task_status' task_status.id %}">{{ task_status.name }}</a></div></div>
+          <div class="col-md-6"><div class="text-right"><a href="{% url 'task_status_update' task_status.id %}" class="badge badge-primary">Edit</a> <a href="{% url 'task_status_delete' task_status.id %}" class="badge badge-danger">Delete</a></div></div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% else %}
+    <p>You don't have any statuses. </p>
+    
+  {% endif %}  
+  
+{% endblock %}
+  

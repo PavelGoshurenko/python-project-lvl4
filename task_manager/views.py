@@ -1,18 +1,22 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
 
 def index(request):
     return render(request, 'index.html', context={
         'who': 'World',
     })
 
+
+
+
 class RegisterFormView(FormView):
     form_class = UserCreationForm
 
     # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
     # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.
-    success_url = "/login/"
+    success_url = reverse_lazy('index')
 
     # Шаблон, который будет использоваться при отображении представления.
     template_name = "register.html"

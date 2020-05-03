@@ -2,8 +2,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>{{task.name}} <a href="{% url 'task_update' task.id %}">Edit</a>
-        <a href="{% url 'task_delete' task.id %}">Delete</a></div>
-    <div>{{task.content}}</div>
-    
+<div class="card text-white bg-secondary mb-3">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6"><div class="text-left"><b><a href="{% url 'task' task.id %}">{{ task.name }}</a></b> 
+        <span class="badge badge-dark">{{ task.status }}</span> 
+      </div></div>
+      <div class="col-md-6"><div class="text-right"><a href="{% url 'task_update' task.id %}" class="badge badge-primary">Edit</a> 
+        <a href="{% url 'task_delete' task.id %}" class="badge badge-danger">Delete</a></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{task.content}}</p>
+  </div>
+
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6"><div class="text-left"><span class="badge badge-secondary">
+        From {{ task.creator }} to {{ task.assigned_to }}
+      </span></div></div>
+      <div class="col-md-6"><div class="text-right">
+        {% for tag in task.tags.all %}
+        <span class="badge badge-dark">{{tag}}</span>
+        {% endfor %}
+      </div></div>
+    </div>
+  </div>
+
+</div>
+
 {% endblock %}

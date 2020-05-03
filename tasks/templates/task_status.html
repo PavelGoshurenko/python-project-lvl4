@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+      <div class="card text-white bg-secondary mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6"><div class="text-left"><a href="{% url 'task_status' task_status.id %}">{{ task_status.name }}</a></div></div>
+                <div class="col-md-6"><div class="text-right"><a href="{% url 'task_status_update' task_status.id %}" class="badge badge-primary">Edit</a> <a href="{% url 'task_status_delete' task_status.id %}" class="badge badge-danger">Delete</a></div></div>
+            </div>
+        </div>
+              
+
+
+        <div class="card-body">
+          <p class="card-text">uogkggggg8</p>
+        </div>
+      </div>
+
+{% endblock %}

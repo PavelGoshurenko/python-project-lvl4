@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3 class="cover-heading">Tags list:</h3>
+    {% if tags %}
+    {% for tag in tags %}
+    <div class="card text-white bg-secondary mb-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6"><div class="text-left"><a href="{% url 'tag' tag.id %}">{{ tag.name }}</a></div></div>
+          <div class="col-md-6"><div class="text-right"><a href="{% url 'tag_update' tag.id %}" class="badge badge-primary">Edit</a> <a href="{% url 'tag_delete' tag.id %}" class="badge badge-danger">Delete</a></div></div>
+        </div>
+      </div>     
+
+    </div>
+    
+  {% endfor %}
+  {% else %}
+    <p>You don't have any tags. </p>
+    
+  {% endif %}  
+  <p class="card-text"><a href="{% url 'tag_create'%}?next={{request.path}}">New Tag</a></p>
+  
+    
+{% endblock %}

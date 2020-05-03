@@ -1,27 +1,107 @@
 
 {% extends "base.html" %}
 
+{% block conteiner %}
+    <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+{% endblock %}
+
 {% block content %}
-    <h2 class="cover-heading">Tasks list:</h2>
-    <p class="lead">
-      {% if tasks %}
-    <div class="conteiner">
-
-      {% for task in tasks %}
+<div class="row">
+<div class="col-md-3">
 
 
-      <div><a href="{% url 'task' task.id %}">{{ task.name }}</a></div>
-    <div>{{task.content}}</div>
-    <p>&nbsp;</p>
-      {% endfor %}
+
+
+
+
+            
+    <h3>Filters:</h3>
+        <table><tr>
+          <td><form method="GET" action="">
+          <input type="hidden" name="creator__username" value={{ user.username }}>
+          <button type="submit" class="btn btn-primary">From me</button>
+        </form> </td>
+          <td> <form method="GET" action="">
+         <input type="hidden" name="assigned_to__username" value={{ user.username }}>
+         <button type="submit" class="btn btn-primary">To me</button>
+        </form>  </td>
+        </tr></table> 
+        
+        
+        <form method="GET" action="" id="filter">
+            
+                <p><label for="status__name">Status</label>
+                <select class="form-control" name="status__name" id="status__name">
+                  <option value="" selected>---------</option>
+                    {% for task_status in task_statuses%}
+                    <option>{{ task_status }}</option>
+                    {% endfor %}
+                </select></p>
+              
+            
+              <p><label for="creator__username">Creator</label>
+                <select class="form-control" name="creator__username" id="creator__username">
+                  <option value="" selected>---------</option>
+                    {% for user in users%}
+                    <option>{{ user.username }}</option>
+                    {% endfor %}
+                </select></p>
+                
+               <p> <label for="assigned_to__username">Assigned to</label>
+                <select class="form-control" name="assigned_to__username" id="assigned_to__username">
+                  <option value="" selected>---------</option>
+                    {% for user in users%}
+                    <option>{{ user.username }}</option>
+                    {% endfor %}
+                </select></p>
+        </form>
+        <p><button type="submit" class="btn btn-primary" form="filter">Filter</button></p>
+
+        
+    
+
+
+
+
+
+</div>
+  <div class="col-md-9">
+    <h3 class="cover-heading">Tasks list:</h3>
+    {% if task_list %}
+    {% for task in task_list %}
+    <div class="card text-white bg-secondary mb-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6"><div class="text-left"><b><a href="{% url 'task' task.id %}">{{ task.name }}</a></b> 
+            <span class="badge badge-dark">{{ task.status }}</span></div></div>
+          <div class="col-md-6"><div class="text-right"><a href="{% url 'task_update' task.id %}" class="badge badge-primary">Edit</a> 
+            <a href="{% url 'task_delete' task.id %}" class="badge badge-danger">Delete</a></div></div>
+        </div>
       </div>
-      
-    {% else %}
-      <p>You don't have any task. </p>
-    {% endif %}  
-    <p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
-    </p>
-    <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-    </p>
+      <div class="card-body">
+        <p class="card-text">{{task.content}}</p>
+      </div>
+
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6"><div class="text-left"><span class="badge badge-secondary">
+            From {{ task.creator }} to {{ task.assigned_to }}
+          </span></div></div>
+          <div class="col-md-6"><div class="text-right">Tags:
+            {% for tag in task.tags.all %}
+            <span class="badge badge-dark">{{tag}}</span>
+            {% endfor %}
+          </div></div>
+        </div>
+      </div>
+
+    </div>
+  {% endfor %}
+  {% else %}
+    <p>You don't have any task. </p>
+  {% endif %}  
+  </div>
+</div>
+   
+    
 {% endblock %}
