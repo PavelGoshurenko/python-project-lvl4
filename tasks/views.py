@@ -1,11 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Task
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from .models import Task, TaskStatus, Tag, User
 from django.views import generic
-
 
 
 class IndexView(generic.ListView):
@@ -17,7 +15,7 @@ class IndexView(generic.ListView):
         context['task_statuses'] = TaskStatus.objects.all()
         context['users'] = User.objects.all()
         return context
-    
+
     def get_queryset(self):
         if self.request.GET:
             parameters = self.request.GET
@@ -29,13 +27,11 @@ class IndexView(generic.ListView):
         return Task.objects.all()
 
 
-
 @login_required
 def task(request, task_id):
     return render(request, 'task.html', context={
         'task': get_object_or_404(Task, id=task_id)
     })
-
 
 
 class TaskCreate(CreateView):
@@ -56,11 +52,11 @@ class TaskDelete(DeleteView):
 
 
 # Tags views
-
 def tags(request):
     return render(request, 'tags.html', context={
         'tags': Tag.objects.all(),
     })
+
 
 @login_required
 def tag(request, tag_id):
@@ -73,6 +69,7 @@ class TagCreate(CreateView):
     model = Tag
     fields = '__all__'
     success_url = reverse_lazy('tags')
+
     def get_context_data(self, **kwargs):
         context = super(TagCreate, self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all()
@@ -84,6 +81,7 @@ class TagUpdate(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('tags')
     template_name = 'tag_update.html'
+
     def get_context_data(self, **kwargs):
         context = super(TagUpdate, self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all()
@@ -96,11 +94,11 @@ class TagDelete(DeleteView):
 
 
 # TaskStatus views
-
 def task_statuses(request):
     return render(request, 'task_statuses.html', context={
         'task_statuses': TaskStatus.objects.all(),
     })
+
 
 @login_required
 def task_status(request, task_status_id):
@@ -113,6 +111,7 @@ class TaskStatusCreate(CreateView):
     model = TaskStatus
     fields = '__all__'
     success_url = reverse_lazy('task_statuses')
+
     def get_context_data(self, **kwargs):
         context = super(TaskStatusCreate, self).get_context_data(**kwargs)
         context['task_statuses'] = TaskStatus.objects.all()
@@ -124,6 +123,7 @@ class TaskStatusUpdate(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('task_statuses')
     template_name = 'taskstatus_update.html'
+
     def get_context_data(self, **kwargs):
         context = super(TaskStatusUpdate, self).get_context_data(**kwargs)
         context['task_statuses'] = TaskStatus.objects.all()

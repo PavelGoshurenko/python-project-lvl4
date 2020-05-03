@@ -9,3 +9,6 @@ test:
 publish:
 	poetry build
 	poetry publish -r testpypi
+
+run:
+	poetry run python manage.py runserver

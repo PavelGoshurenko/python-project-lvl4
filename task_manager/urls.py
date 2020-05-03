@@ -19,8 +19,8 @@ from task_manager import views
 from django.views.generic import RedirectView
 from django.conf.urls import url
 
+
 urlpatterns = [
-    #path('', views.index),
     path('', RedirectView.as_view(url='/tasks/', permanent=True)),
     path('tasks/', include('tasks.urls')),
     path('admin/', admin.site.urls),
