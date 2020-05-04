@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
+
 
 
 class Tag(models.Model):
@@ -24,7 +26,6 @@ class TaskStatus(models.Model):
 
 
 class Task(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, help_text="Enter a task name.")
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField(
@@ -32,8 +33,9 @@ class Task(models.Model):
         help_text="Enter a text of the task")
     status = models.ForeignKey(
         TaskStatus,
+        default=get_object_or_404(TaskStatus, name="New"),
         on_delete=models.SET_NULL,
-        null=True, blank=True)
+        null=True, blank=True)  
     tags = models.ManyToManyField(Tag, help_text="Select a tags for this task")
     creator = models.ForeignKey(
         User,

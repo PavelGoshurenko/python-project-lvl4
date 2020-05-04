@@ -39,6 +39,12 @@ class TaskCreate(CreateView):
     fields = '__all__'
     success_url = reverse_lazy('index')
 
+    def get_initial(self, *args, **kwargs):
+        initial = super(TaskCreate, self).get_initial(**kwargs)
+        initial['creator'] = self.request.user
+        return initial
+
+
 
 class TaskUpdate(UpdateView):
     model = Task
