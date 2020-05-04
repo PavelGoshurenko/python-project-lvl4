@@ -45,7 +45,6 @@ class TaskCreate(CreateView):
         return initial
 
 
-
 class TaskUpdate(UpdateView):
     model = Task
     fields = '__all__'

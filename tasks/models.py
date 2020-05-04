@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 
 
-
 class Tag(models.Model):
     name = models.CharField(
         max_length=200,
@@ -35,7 +34,7 @@ class Task(models.Model):
         TaskStatus,
         default=get_object_or_404(TaskStatus, name="New"),
         on_delete=models.SET_NULL,
-        null=True, blank=True)  
+        null=True, blank=True)
     tags = models.ManyToManyField(Tag, help_text="Select a tags for this task")
     creator = models.ForeignKey(
         User,
