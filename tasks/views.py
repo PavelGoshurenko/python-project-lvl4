@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from .models import Task, TaskStatus, Tag, User
 from django.views import generic
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from tasks.models import Tag, Task, TaskStatus, User
 
 
 class IndexView(generic.ListView):
@@ -27,14 +28,13 @@ class IndexView(generic.ListView):
         return Task.objects.all()
 
 
-@login_required
 def task(request, task_id):
     return render(request, 'task.html', context={
         'task': get_object_or_404(Task, id=task_id)
     })
 
 
-class TaskCreate(CreateView):
+class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = '__all__'
     success_url = reverse_lazy('index')
@@ -42,16 +42,17 @@ class TaskCreate(CreateView):
     def get_initial(self, *args, **kwargs):
         initial = super(TaskCreate, self).get_initial(**kwargs)
         initial['creator'] = self.request.user
+        initial['status'] = get_object_or_404(TaskStatus, name="New")
         return initial
 
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = '__all__'
     success_url = reverse_lazy('index')
 
 
-class TaskDelete(DeleteView):
+class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy('index')
 
@@ -63,14 +64,13 @@ def tags(request):
     })
 
 
-@login_required
 def tag(request, tag_id):
     return render(request, 'tag.html', context={
         'tag': get_object_or_404(Tag, id=tag_id)
     })
 
 
-class TagCreate(CreateView):
+class TagCreate(LoginRequiredMixin, CreateView):
     model = Tag
     fields = '__all__'
     success_url = reverse_lazy('tags')
@@ -81,7 +81,7 @@ class TagCreate(CreateView):
         return context
 
 
-class TagUpdate(UpdateView):
+class TagUpdate(LoginRequiredMixin, UpdateView):
     model = Tag
     fields = '__all__'
     success_url = reverse_lazy('tags')
@@ -93,7 +93,7 @@ class TagUpdate(UpdateView):
         return context
 
 
-class TagDelete(DeleteView):
+class TagDelete(LoginRequiredMixin, DeleteView):
     model = Tag
     success_url = reverse_lazy('tags')
 
@@ -105,14 +105,13 @@ def task_statuses(request):
     })
 
 
-@login_required
 def task_status(request, task_status_id):
     return render(request, 'task_status.html', context={
         'task_status': get_object_or_404(TaskStatus, id=task_status_id)
     })
 
 
-class TaskStatusCreate(CreateView):
+class TaskStatusCreate(LoginRequiredMixin, CreateView):
     model = TaskStatus
     fields = '__all__'
     success_url = reverse_lazy('task_statuses')
@@ -123,7 +122,7 @@ class TaskStatusCreate(CreateView):
         return context
 
 
-class TaskStatusUpdate(UpdateView):
+class TaskStatusUpdate(LoginRequiredMixin, UpdateView):
     model = TaskStatus
     fields = '__all__'
     success_url = reverse_lazy('task_statuses')
@@ -135,6 +134,6 @@ class TaskStatusUpdate(UpdateView):
         return context
 
 
-class TaskStatusDelete(DeleteView):
+class TaskStatusDelete(LoginRequiredMixin, DeleteView):
     model = TaskStatus
     success_url = reverse_lazy('task_statuses')

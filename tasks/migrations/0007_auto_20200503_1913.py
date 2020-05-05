@@ -2,6 +2,7 @@
 
 from django.db import migrations
 
+
 def add_statuses(apps, schema_editor):
     TaskStaus = apps.get_model('tasks', 'TaskStatus')
     TaskStaus(name="New").save()

@@ -2,6 +2,9 @@
  [![Build Status](https://travis-ci.org/PavelGoshurenko/python-project-lvl4.svg?branch=master)](https://travis-ci.org/PavelGoshurenko/python-project-lvl4)
 
 
-
+Simple task manager.
+You can see an example of work here:
 https://frozen-dusk-24455.herokuapp.com/
+
+Before you start, rename file ".env.example" to ".env". And fill in the the environment variables values.
 
