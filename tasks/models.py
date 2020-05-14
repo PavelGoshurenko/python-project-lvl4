@@ -39,7 +39,11 @@ class Task(models.Model):
         TaskStatus,
         on_delete=models.SET_NULL,
         null=True, blank=False)
-    tags = models.ManyToManyField(Tag, blank=True, help_text="Select a tags for this task")
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
+        help_text="Select a tags for this task"
+        )
     creator = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
