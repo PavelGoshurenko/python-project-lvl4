@@ -28,10 +28,15 @@ class IndexView(generic.ListView):
         return Task.objects.all()
 
 
-def task(request, task_id):
+""" def task(request, task_id):
     return render(request, 'task.html', context={
         'task': get_object_or_404(Task, id=task_id)
-    })
+    }) """
+
+
+class TaskView(generic.DetailView):
+    model = Task
+    template_name = "task.html"
 
 
 class TaskCreate(LoginRequiredMixin, CreateView):
@@ -64,10 +69,17 @@ def tags(request):
     })
 
 
-def tag(request, tag_id):
-    return render(request, 'tag.html', context={
-        'tag': get_object_or_404(Tag, id=tag_id)
-    })
+class TagsView(generic.ListView):
+    template_name = 'tags.html'
+    context_object_name = 'tags'
+
+    def get_queryset(self):
+        return Tag.objects.all()
+
+
+class TagView(generic.DetailView):
+    model = Tag
+    template_name = "tag.html"
 
 
 class TagCreate(LoginRequiredMixin, CreateView):
@@ -99,16 +111,17 @@ class TagDelete(LoginRequiredMixin, DeleteView):
 
 
 # TaskStatus views
-def task_statuses(request):
-    return render(request, 'task_statuses.html', context={
-        'task_statuses': TaskStatus.objects.all(),
-    })
+class TaskStatusesView(generic.ListView):
+    template_name = 'task_statuses.html'
+    context_object_name = 'task_statuses'
+
+    def get_queryset(self):
+        return TaskStatus.objects.all()
 
 
-def task_status(request, task_status_id):
-    return render(request, 'task_status.html', context={
-        'task_status': get_object_or_404(TaskStatus, id=task_status_id)
-    })
+class TaskStatusView(generic.DetailView):
+    model = TaskStatus
+    template_name = "task_status.html"
 
 
 class TaskStatusCreate(LoginRequiredMixin, CreateView):

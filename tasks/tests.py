@@ -23,18 +23,18 @@ class UrlsTest(TestCase):
 
     def test_get_tag_url(self):
         test_tag = Tag.objects.get(id=1)
-        self.assertEquals(test_tag.get_absolute_url(), '/tasks/tag/1')
+        self.assertEquals(test_tag.get_absolute_url(), '/tasks/tag/1/')
 
     def test_get_status_url(self):
         test_status = TaskStatus.objects.get(id=5)
         self.assertEquals(
             test_status.get_absolute_url(),
-            '/tasks/task_status/5'
+            '/tasks/task_status/5/'
             )
 
     def test_get_task_url(self):
         test_task = Task.objects.get(id=1)
-        self.assertEquals(test_task.get_absolute_url(), '/tasks/task/1')
+        self.assertEquals(test_task.get_absolute_url(), '/tasks/1/')
 
 
 class IndexViewTest(TestCase):

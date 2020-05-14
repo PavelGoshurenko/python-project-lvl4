@@ -1,18 +1,21 @@
 # Makefile
 
 install:
-	poetry install
+	python3 -m poetry install
 lint:
-	poetry run flake8
+	python3 -m poetry run flake8
 test:
-	poetry run coverage run --source='.' --omit '.venv/*' manage.py test
-	poetry run coverage report
-	poetry run coverage xml
+	python3 -m poetry run coverage run --source='.' --omit '.venv/*' manage.py test
+	python3 -m poetry run coverage report
+	python3 -m poetry run coverage xml
 	
 publish:
-	poetry build
-	poetry publish -r testpypi
+	python3 -m poetry build
+	python3 -m poetry publish -r testpypi
 
 run:
-	poetry run python manage.py runserver
+	python3 -m poetry run python manage.py runserver
+
+requirements:
+	python3 -m poetry export -f requirements.txt -o requirements.txt
 
