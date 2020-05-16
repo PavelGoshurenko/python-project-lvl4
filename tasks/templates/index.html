@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-
+{% load bootstrap4 %}
 {% block conteiner %}
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
 {% endblock %}
@@ -28,37 +28,14 @@
         </tr></table> 
         
         
-        <form method="GET" action="" id="filter">
-            
-                <p><label for="status__name">Status</label>
-                <select class="form-control" name="status__name" id="status__name">
-                  <option value="" selected>---------</option>
-                    {% for task_status in task_statuses%}
-                    <option>{{ task_status }}</option>
-                    {% endfor %}
-                </select></p>
-              
-            
-              <p><label for="creator__username">Creator</label>
-                <select class="form-control" name="creator__username" id="creator__username">
-                  <option value="" selected>---------</option>
-                    {% for user in users%}
-                    <option>{{ user.username }}</option>
-                    {% endfor %}
-                </select></p>
-                
-               <p> <label for="assigned_to__username">Assigned to</label>
-                <select class="form-control" name="assigned_to__username" id="assigned_to__username">
-                  <option value="" selected>---------</option>
-                    {% for user in users%}
-                    <option>{{ user.username }}</option>
-                    {% endfor %}
-                </select></p>
+        <form action="" method="get" class="form">
+          {% bootstrap_form filter.form %}
+          {% buttons %}
+            <button type="submit" class="btn btn-primary">
+              Filter
+            </button>
+          {% endbuttons %}
         </form>
-        <p><button type="submit" class="btn btn-primary" form="filter">Filter</button></p>
-
-        
-    
 
 
 

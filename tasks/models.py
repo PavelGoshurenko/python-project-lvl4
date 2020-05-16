@@ -37,8 +37,8 @@ class Task(models.Model):
         help_text="Enter a text of the task")
     status = models.ForeignKey(
         TaskStatus,
-        on_delete=models.SET_NULL,
-        null=True, blank=False)
+        on_delete=models.CASCADE,
+        null=False, blank=False)
     tags = models.ManyToManyField(
         Tag,
         blank=True,

@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from tasks.filters import TaskFilter
 
-from tasks.models import Tag, Task, TaskStatus, User
+from tasks.models import Tag, Task, TaskStatus
 
 
 class IndexView(generic.ListView):
@@ -13,8 +14,10 @@ class IndexView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['task_statuses'] = TaskStatus.objects.all()
-        context['users'] = User.objects.all()
+        context['filter'] = TaskFilter(
+            self.request.GET,
+            queryset=self.get_queryset(),
+        )
         return context
 
     def get_queryset(self):
@@ -26,12 +29,6 @@ class IndexView(generic.ListView):
                     filters[key] = value
             return Task.objects.filter(**filters)
         return Task.objects.all()
-
-
-""" def task(request, task_id):
-    return render(request, 'task.html', context={
-        'task': get_object_or_404(Task, id=task_id)
-    }) """
 
 
 class TaskView(generic.DetailView):
