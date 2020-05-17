@@ -4,7 +4,7 @@
 
 Simple task manager.
 You can see an example of work here:
-https://frozen-dusk-24455.herokuapp.com/
+https://fathomless-beyond-15577.herokuapp.com/
 
 Before you start, rename file ".env.example" to ".env". And fill in the the environment variables values.
 
